@@ -69,9 +69,7 @@ export default function CameraPreview({ onCapture, isAutoCaptureEnabled, setIsAu
     setIsFlashing(true);
     setTimeout(() => setIsFlashing(false), 200);
 
-    // シャッター音 (Optional)
-    const audio = new Audio('/shutter.mp3');
-    audio.play().catch(() => {}); // 無視
+    // シャッター音を削除しました
 
     try {
       const blob = await getBlobFromCanvas(videoRef.current);
