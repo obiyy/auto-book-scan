@@ -1,20 +1,32 @@
 'use client';
 
 import React from 'react';
-import { MdPictureAsPdf, MdDownload } from 'react-icons/md';
+import { MdPictureAsPdf, MdDownload, MdPhotoLibrary } from 'react-icons/md';
 
 interface BottomBarProps {
   count: number;
   onGeneratePdf: () => void;
   isGenerating: boolean;
+  isThumbnailListVisible: boolean;
+  onToggleThumbnails: () => void;
 }
 
-export default function BottomBar({ count, onGeneratePdf, isGenerating }: BottomBarProps) {
+export default function BottomBar({ count, onGeneratePdf, isGenerating, isThumbnailListVisible, onToggleThumbnails }: BottomBarProps) {
   return (
     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gray-900 border-t border-gray-800 flex justify-between items-center z-30">
-      <div className="flex flex-col">
-        <span className="text-gray-400 text-xs uppercase tracking-wider">撮影済み</span>
-        <span className="text-white text-2xl font-bold">{count} <span className="text-base font-normal text-gray-300">枚</span></span>
+      <div className="flex items-center gap-4">
+        <button
+          onClick={onToggleThumbnails}
+          className={`p-3 rounded-full shadow-md transition-colors ${
+            isThumbnailListVisible ? 'bg-blue-600 text-white' : 'bg-gray-800 text-gray-300'
+          }`}
+        >
+          <MdPhotoLibrary size={24} />
+        </button>
+        <div className="flex flex-col">
+          <span className="text-gray-400 text-xs uppercase tracking-wider">撮影済み</span>
+          <span className="text-white text-2xl font-bold">{count} <span className="text-base font-normal text-gray-300">枚</span></span>
+        </div>
       </div>
 
       <button

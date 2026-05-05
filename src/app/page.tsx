@@ -12,6 +12,7 @@ import { generatePDF } from '@/lib/pdfGenerator';
 export default function Home() {
   const [isAutoCaptureEnabled, setIsAutoCaptureEnabled] = useState(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [isThumbnailListVisible, setIsThumbnailListVisible] = useState(false);
 
   // LiveQuery to keep track of scanned images
   const images = useLiveQuery(() => db.scannedImages.orderBy('createdAt').toArray(), []) || [];
@@ -68,15 +69,19 @@ export default function Home() {
         />
         
         {/* Thumbnail List Overlaying Camera (above BottomBar) */}
-        <div className="absolute bottom-20 left-0 right-0 z-20">
-          <ThumbnailList images={images} onDelete={handleDelete} />
-        </div>
+        {isThumbnailListVisible && (
+          <div className="absolute bottom-20 left-0 right-0 z-20">
+            <ThumbnailList images={images} onDelete={handleDelete} />
+          </div>
+        )}
       </div>
 
       <BottomBar 
         count={images.length} 
         onGeneratePdf={handleGeneratePdf} 
         isGenerating={isGeneratingPdf}
+        isThumbnailListVisible={isThumbnailListVisible}
+        onToggleThumbnails={() => setIsThumbnailListVisible(!isThumbnailListVisible)}
       />
     </main>
   );
